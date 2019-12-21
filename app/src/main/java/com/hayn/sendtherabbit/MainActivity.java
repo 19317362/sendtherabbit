@@ -33,25 +33,18 @@ public class MainActivity extends AppCompatActivity {
         buttonSend = findViewById(R.id.buttonSend);
 
         //set not clickable, because app starts with no text entered in fields
-        buttonSend.setClickable(false);
+        buttonSend.setEnabled(false);
 
         //TextWatcher to enable or disable send button
         tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            //before- and onTextChanged both unused but needed for TextWatcher
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(isEmpty(editHost) | isEmpty(editMessage)){
-                    buttonSend.setClickable(false);
-                }else{
-                    buttonSend.setClickable(true);
-                }
+                //Enable button only if text present in both editTexts
+                buttonSend.setEnabled(!(isEmpty(editHost) | isEmpty(editMessage)));
             }
         };
 
