@@ -16,6 +16,14 @@ import com.rabbitmq.client.Channel;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * APP to send rabbitMQ messages
+     *
+     * TODO: make into news publisher app ; implement rabbitmq
+     */
+
+
+
     EditText editHost;
     EditText editMessage;
     Button buttonSend;
@@ -67,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean isEmpty(EditText etText){ //returns true if not empty
+    private boolean isEmpty(EditText etText){ //returns true if editText not empty
         return etText.getText().toString().trim().length() == 0;
     }
 
