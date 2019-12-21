@@ -1,12 +1,16 @@
 package com.hayn.sendtherabbit;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.rabbitmq.client.ConnectionFactory;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.Channel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
     private synchronized void publishMessage(){ //publishes current editText's text to host address
 
-
-
-
     }
 
     public void createToast(CharSequence msg, int length){
         Toast.makeText(getApplicationContext(), msg, length).show();
+    }
+
+    //is this needed??
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    protected void onDestroy(){
+        //createToast("exiting...",Toast.LENGTH_SHORT); //possible to do
+        super.onDestroy();
     }
 }
