@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
      * TODO: make into news publisher app ; implement rabbitmq
      */
 
-    EditText editHost;
-    EditText editMessage;
+    EditText editHost, editMessage, editUser, editPass;
     Button buttonSend;
     TextWatcher textWatcher;
     SharedPreferences prefs;
 
     String hostKey = "hostname";
+    String userKey = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         //setup widgets
         editHost = findViewById(R.id.editHost);
         editMessage = findViewById(R.id.editMessage);
+        editUser = findViewById(R.id.editUser);
+        editPass = findViewById(R.id.editPass);
         buttonSend = findViewById(R.id.buttonSend);
 
         //set not clickable, because app starts with no text entered in fields
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onClick(View view){
                 //createToast("Message Sent!", Toast.LENGTH_SHORT); //create Toast
                 publisherTask.setHost(editHost.getText().toString().trim());
+                publisherTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
                 new publisherTask().execute(editMessage.getText().toString().trim());
             }
         });
@@ -111,10 +114,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void savePreferences(){
         prefs.edit().putString(hostKey, editHost.getText().toString().trim()).apply();
+        prefs.edit().putString(userKey, editUser.getText().toString().trim()).apply();
     }
 
     private void loadPreferences(){
         editHost.setText(prefs.getString(hostKey,""));
+        editUser.setText(prefs.getString(userKey,""));
     }
 
     @Override

@@ -15,7 +15,7 @@ class publisherTask extends AsyncTask<String,Void,Void> {
     static Connection connection;
     ConnectionFactory factory;
     static String exchange = "exchange1";
-    static String host;
+    static String host, username, password;
 
     @Override
     protected Void doInBackground(String... message) {
@@ -43,5 +43,10 @@ class publisherTask extends AsyncTask<String,Void,Void> {
 
     static void setHost(String host) {
         publisherTask.host = host;
+    }
+
+    static void setAccount(String user, String pass){
+        username = user;
+        password = pass;
     }
 }
