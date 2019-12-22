@@ -13,14 +13,12 @@ class publishTask extends AsyncTask<String,Void,Boolean> {
 
     private static Channel channel;
     private static Connection connection;
-    private ConnectionFactory factory;
-    private static String exchange = "exchange1";
     private static String host, username, password;
     private static Context context;
 
     @Override
     protected Boolean doInBackground(String... message) {
-        factory = new ConnectionFactory();
+        ConnectionFactory factory = new ConnectionFactory();
 
         factory.setHost(host);
         factory.setUsername(username);
@@ -30,7 +28,7 @@ class publishTask extends AsyncTask<String,Void,Boolean> {
         try {
             connection = factory.newConnection();
             channel = connection.createChannel();
-            channel.basicPublish(exchange,"", null, message[0].getBytes());
+            channel.basicPublish("exchange1","", null, message[0].getBytes());
             System.out.println("Message Sent '" + message[0] + "'");
             return true;
         } catch (IOException | TimeoutException e) {

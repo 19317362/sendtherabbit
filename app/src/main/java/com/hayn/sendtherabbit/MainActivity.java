@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     TextWatcher textWatcher;
     SharedPreferences prefs;
 
-    String hostKey = "hostname";
-    String userKey = "username";
+    final String hostKey = "hostname";
+    final String userKey = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +62,12 @@ public class MainActivity extends AppCompatActivity {
         };
 
         //setup onClickListener for send button
-        buttonSend.setOnClickListener(new View.OnClickListener(){
-            @Override public void onClick(View view){
-                //createToast("Message Sent!", Toast.LENGTH_SHORT); //create Toast
-                publishTask.setHost(editHost.getText().toString().trim());
-                publishTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
-                publishTask.setContext(getApplicationContext());
-                new publishTask().execute(editMessage.getText().toString().trim());
-            }
+        buttonSend.setOnClickListener(view -> {
+            //createToast("Message Sent!", Toast.LENGTH_SHORT); //create Toast
+            publishTask.setHost(editHost.getText().toString().trim());
+            publishTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
+            publishTask.setContext(getApplicationContext());
+            new publishTask().execute(editMessage.getText().toString().trim());
         });
 
         //setup textChanged Listeners to evaluate if sending message should be enabled or not
