@@ -1,24 +1,25 @@
 package com.hayn.sendtherabbit;
 
+import android.content.Context;
 import android.os.AsyncTask;
-
+import android.widget.Toast;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
-class publisherTask extends AsyncTask<String,Void,Void> {
+class publisherTask extends AsyncTask<String,Void,Boolean> {
 
     private static Channel channel;
     private static Connection connection;
     private ConnectionFactory factory;
     private static String exchange = "exchange1";
     private static String host, username, password;
+    private static Context context;
 
     @Override
-    protected Void doInBackground(String... message) {
+    protected Boolean doInBackground(String... message) {
         factory = new ConnectionFactory();
 
         factory.setHost(host);
@@ -31,11 +32,21 @@ class publisherTask extends AsyncTask<String,Void,Void> {
             channel = connection.createChannel();
             channel.basicPublish(exchange,"", null, message[0].getBytes());
             System.out.println("Message Sent '" + message[0] + "'");
+            return true;
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
+        return false;
+    }
 
-        return null;
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+        if (aBoolean){
+            Toast.makeText(context, "Message Sent!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Error sending message", Toast.LENGTH_LONG).show();
+        }
     }
 
     static void exit() throws IOException, TimeoutException {
@@ -50,5 +61,9 @@ class publisherTask extends AsyncTask<String,Void,Void> {
     static void setAccount(String user, String pass){
         username = user;
         password = pass;
+    }
+
+    static void setContext(Context c){
+        context = c;
     }
 }

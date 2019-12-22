@@ -15,8 +15,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="RabbitMQ Message Sender"
-        android:textSize="18sp"
+        android:text="Emergency Broadcast Services"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,15 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Host Address"
+            android:text="Destination Server"
             android:textAlignment="center" />
 
         <EditText
             android:id="@+id/editHost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="13"
-            android:hint="Host Address"
+            android:ems="12"
+            android:hint="Pentagon"
             android:inputType="textFilter"
             android:singleLine="true" />
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="13"
-            android:hint="Username"
+            android:hint="Alias"
             android:inputType="textFilter"
             android:singleLine="true"
             android:textSize="18sp" />
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="13"
-            android:hint="Password"
+            android:hint="Authorization Key"
             android:inputType="textPassword"
             android:singleLine="true" />
     </LinearLayout>
@@ -105,7 +105,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:hint="Type Message Here"
+        android:hint='example:\n"nuclear strike imminent.\nTake Shelter immidiately"'
         android:inputType="text"
         android:singleLine="false"
         app:layout_constraintBottom_toTopOf="@+id/buttonSend"
@@ -121,7 +121,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="send message"
+        android:text="send emergency broadcast message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

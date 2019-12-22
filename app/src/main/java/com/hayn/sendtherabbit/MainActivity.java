@@ -3,7 +3,6 @@ package com.hayn.sendtherabbit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,10 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConnectionFactory;
-
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -25,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * APP to send rabbitMQ messages
      *
-     * TODO: make into news publisher app ; implement rabbitmq
+     * TODO:
      */
 
     EditText editHost, editMessage, editUser, editPass;
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override public void afterTextChanged(Editable s) {
                 //Enable button only if text present in both editTexts
-                buttonSend.setEnabled(!(isEmpty(editHost) | isEmpty(editMessage)));
+                buttonSend.setEnabled(!(isEmpty(editHost) | isEmpty(editMessage) | isEmpty(editUser)));
             }
         };
 
@@ -73,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 //createToast("Message Sent!", Toast.LENGTH_SHORT); //create Toast
                 publisherTask.setHost(editHost.getText().toString().trim());
                 publisherTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
+                publisherTask.setContext(getApplicationContext());
                 new publisherTask().execute(editMessage.getText().toString().trim());
             }
         });
@@ -80,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //setup textChanged Listeners to evaluate if sending message should be enabled or not
         editHost.addTextChangedListener(textWatcher);
         editMessage.addTextChangedListener(textWatcher);
+        editUser.addTextChangedListener(textWatcher);
 
         //load saved Preferences, like Host address etc..
         loadPreferences();
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         return etText.getText().toString().trim().length() == 0;
     }
 
-    private void createToast(CharSequence msg, int length){
+    void createToast(CharSequence msg, int length){
         Toast.makeText(getApplicationContext(), msg, length).show();
     }
 
