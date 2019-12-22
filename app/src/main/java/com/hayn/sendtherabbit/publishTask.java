@@ -9,7 +9,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-class publisherTask extends AsyncTask<String,Void,Boolean> {
+class publishTask extends AsyncTask<String,Void,Boolean> {
 
     private static Channel channel;
     private static Connection connection;
@@ -55,7 +55,7 @@ class publisherTask extends AsyncTask<String,Void,Boolean> {
     }
 
     static void setHost(String host) {
-        publisherTask.host = host;
+        publishTask.host = host;
     }
 
     static void setAccount(String user, String pass){

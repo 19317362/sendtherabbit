@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View view){
                 //createToast("Message Sent!", Toast.LENGTH_SHORT); //create Toast
-                publisherTask.setHost(editHost.getText().toString().trim());
-                publisherTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
-                publisherTask.setContext(getApplicationContext());
-                new publisherTask().execute(editMessage.getText().toString().trim());
+                publishTask.setHost(editHost.getText().toString().trim());
+                publishTask.setAccount(editUser.getText().toString().trim(), editPass.getText().toString().trim());
+                publishTask.setContext(getApplicationContext());
+                new publishTask().execute(editMessage.getText().toString().trim());
             }
         });
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         try {
-            publisherTask.exit();
+            publishTask.exit();
             createToast("Exit successful",Toast.LENGTH_SHORT); //possible to do
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
