@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Emergency Broadcast</string>
+    <string name="top_message">Emergency Broadcast Services</string>
+    <string name="description_host">Destination Server</string>
+    <string name="hint_host">Pentagon</string>
+    <string name="hint_user">Alias</string>
+    <string name="hint_pass">Authorization Key</string>
+    <string name="hint_msg">example:\n\"nuclear strike imminent.\nTake Shelter immediately\"</string>
+    <string name="send_button">send emergency broadcast message</string>
 </resources>

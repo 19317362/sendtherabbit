@@ -17,9 +17,13 @@ import java.util.concurrent.TimeoutException;
 public class MainActivity extends AppCompatActivity {
 
     /**
-     * APP to send rabbitMQ messages
+     * APP capable of sending msgs to rabbitMQ instance
      *
-     * TODO:
+     * This App is developed for Emergency Situations and allows parties to send
+     * Emergency Broadcast Messages to a RabbitMQ Direct Exchange, where it will be
+     * further distributed to all people in the compromised area.
+     *
+     * Written by Roman Hayn, 25138
      */
 
     EditText editHost, editMessage, editUser, editPass;
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //get saved preferences
+        //get saved preferences (Username and Host address)
         prefs = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
 
         //setup widgets
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override public void afterTextChanged(Editable s) {
-                //Enable button only if text present in both editTexts
+                //Enable button only if text present in Host-, User- and Message-Textbox
                 buttonSend.setEnabled(!(isEmpty(editHost) | isEmpty(editMessage) | isEmpty(editUser)));
             }
         };
@@ -75,45 +79,33 @@ public class MainActivity extends AppCompatActivity {
         editMessage.addTextChangedListener(textWatcher);
         editUser.addTextChangedListener(textWatcher);
 
-        //load saved Preferences, like Host address etc..
+        //load saved Preferences, like Host address and username
         loadPreferences();
     }
 
-    /**
-    private synchronized void publishMessage(){ //publishes current editText's text to host address
-        factory.setHost(editHost.getText().toString().trim()); //set host to sanitized Host editText
-        String message = editMessage.getText().toString().trim(); // sanitize message from Message editText
-        connection = null;
-
-        try {
-            connection = factory.newConnection();
-            channel = connection.createChannel();
-            channel.basicPublish(exchange,"", null, message.getBytes());
-            System.out.println("Message Sent '" + message + "'");
-            createToast("Message Sent!", Toast.LENGTH_SHORT);
-        } catch (IOException | TimeoutException e) {
-            e.printStackTrace();
-            createToast("ERROR: " + e.getLocalizedMessage() ,Toast.LENGTH_LONG);
-        }
-    }
-     */
-
-    private boolean isEmpty(EditText etText){ //returns true if editText not empty
-        return etText.getText().toString().trim().length() == 0;
+    private boolean isEmpty(EditText tmpText){ //returns false if editText not empty
+        return tmpText.getText().toString().trim().length() == 0;
     }
 
-    void createToast(CharSequence msg, int length){
+    void createToast(CharSequence msg, int length){ //simple function to create Toasts
         Toast.makeText(getApplicationContext(), msg, length).show();
     }
 
-    private void savePreferences(){
+    private void savePreferences(){ // It saves Host and Username in the preferences
         prefs.edit().putString(hostKey, editHost.getText().toString().trim()).apply();
         prefs.edit().putString(userKey, editUser.getText().toString().trim()).apply();
     }
 
-    private void loadPreferences(){
-        editHost.setText(prefs.getString(hostKey,""));
-        editUser.setText(prefs.getString(userKey,""));
+    private void loadPreferences(){ // loads Hostname and Username from Preferences
+        String host = prefs.getString(hostKey,"");
+        String user = prefs.getString(userKey,"");
+        editHost.setText(host);
+        editUser.setText(user);
+        if(host.equals("") && user.equals("")){
+            createToast("Previously saved data not found", Toast.LENGTH_LONG);
+        }else{
+            createToast("Data done loading", Toast.LENGTH_SHORT);
+        }
     }
 
     @Override
@@ -127,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         try {
-            publishTask.exit();
-            createToast("Exit successful",Toast.LENGTH_SHORT); //possible to do
+            publishTask.exit(); // close connection and channel
+            createToast("Exit successful",Toast.LENGTH_SHORT);
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
