@@ -11,17 +11,19 @@ import java.util.concurrent.TimeoutException;
 
 class publisherTask extends AsyncTask<String,Void,Void> {
 
-    static Channel channel;
-    static Connection connection;
-    ConnectionFactory factory;
-    static String exchange = "exchange1";
-    static String host, username, password;
+    private static Channel channel;
+    private static Connection connection;
+    private ConnectionFactory factory;
+    private static String exchange = "exchange1";
+    private static String host, username, password;
 
     @Override
     protected Void doInBackground(String... message) {
         factory = new ConnectionFactory();
 
         factory.setHost(host);
+        factory.setUsername(username);
+        factory.setPassword(password);
         connection = null;
 
         try {
