@@ -11,13 +11,11 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
 
     /**
-     * APP capable of sending msgs to rabbitMQ instance
+     * APP capable of sending messages to rabbitMQ instance
      *
      * This App is developed for Emergency Situations and allows parties to send
      * Emergency Broadcast Messages to a RabbitMQ Direct Exchange, where it will be
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override public void afterTextChanged(Editable s) {
-                //Enable button only if text present in Host-, User- and Message-Textbox
+                //Enable button only if text present in Host-, User- and Message-Text box
                 buttonSend.setEnabled(!(isEmpty(editHost) | isEmpty(editMessage) | isEmpty(editUser)));
             }
         };
@@ -117,12 +115,6 @@ public class MainActivity extends AppCompatActivity {
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     protected void onDestroy(){
         super.onDestroy();
-
-        try {
-            publishTask.exit(); // close connection and channel
-            createToast("Exit successful",Toast.LENGTH_SHORT);
-        } catch (IOException | TimeoutException e) {
-            e.printStackTrace();
-        }
+        createToast("Exit successful",Toast.LENGTH_SHORT);
     }
 }

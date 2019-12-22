@@ -50,7 +50,8 @@
             android:hint="@string/hint_host"
             android:inputType="textFilter"
             android:singleLine="true"
-            android:nextFocusDown="@id/editUser" />
+            android:nextFocusDown="@id/editUser"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,11 +74,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="13"
-            android:hint="Alias"
+            android:hint="@string/hint_user"
             android:inputType="textFilter"
             android:singleLine="true"
             android:textSize="18sp"
-            android:nextFocusDown="@id/editPass" />
+            android:nextFocusDown="@id/editPass"
+            android:autofillHints="username" />
 
         <EditText
             android:id="@+id/editPass"
@@ -88,7 +90,8 @@
             android:hint="@string/hint_pass"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:nextFocusDown="@id/editMessage" />
+            android:nextFocusDown="@id/editMessage"
+            android:autofillHints="password" />
     </LinearLayout>
 
     <View
@@ -114,7 +117,8 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonSend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/buttonSend"

@@ -30,6 +30,8 @@ class publishTask extends AsyncTask<String,Void,Boolean> {
             channel = connection.createChannel();
             channel.basicPublish("exchange1","", null, message[0].getBytes());
             System.out.println("Message Sent '" + message[0] + "'");
+            connection.close();
+            channel.close();
             return true;
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
@@ -45,11 +47,6 @@ class publishTask extends AsyncTask<String,Void,Boolean> {
         } else {
             Toast.makeText(context, "Error sending message", Toast.LENGTH_LONG).show();
         }
-    }
-
-    static void exit() throws IOException, TimeoutException {
-        connection.close();
-        channel.close();
     }
 
     static void setHost(String host) {
