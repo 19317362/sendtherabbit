@@ -9,7 +9,8 @@ Repository: https://github.com/Romanizer/sendtherabbit
 The Goal was creating an App capable of sending messages to a RabbitMQ instance.
 The chosen theme for this study project was a message sending app.
 Specifically an app that would be used by authorities to 
-warn about Emergency Situations, e.g. Wildfires or Earthquakes etc...
+warn about Emergency Situations, e.g. Wildfires or Earthquakes.
+The repository is an Android Studio Project.
 
 
 ## Supported Versions: 
