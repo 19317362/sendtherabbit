@@ -13,10 +13,10 @@ warn about Emergency Situations, e.g. Wildfires or Earthquakes.
 The repository is an Android Studio Project.
 
 
-## Supported Versions: 
+## Supported Versions
 API 24: Android 7.0 Nougat and up
 
-## Dependencies: 
+## Dependencies
 All Dependencies are included in the Gradle build file.
 * rabbitmq: amqp-client 5.8.0
 * slf4j: slf4j-api 1.7.29
